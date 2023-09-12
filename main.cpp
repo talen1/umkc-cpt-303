@@ -3,7 +3,7 @@
 
 using namespace std;
 
-//function to check if a certain integer exists in the array
+//check if a certain integer exists in the array
 bool check(int arr[], int size, int num){
   for(int i = 0; i < size; i++){
     if(arr[i] == num){
@@ -13,18 +13,18 @@ bool check(int arr[], int size, int num){
   return false;
 }
 
-//function to modify the value of an integer when called with the index of the integer in the array and return the new value and old value back to the user
+//modify the value of an integer when called with the index of the integer in the array and return the new value and old value back to the user
 void modify(int arr[], int index, int &num, int &old){
   old = arr[index];
   arr[index] = num;
 }
 
-//function that adds a new integer to the end of the array
+//add a new integer to the end of the array
 void add(int arr[], int &size, int num){
   arr[size++] = num;
 }
 
-//function which intakes an index of an array and remove the integer corresponding to that index
+//intakes an index of an array and remove the integer corresponding to that index
 void remove(int arr[], int &size, int index){
   for(int i = index; i < size; i++){
     arr[i] = arr[i+1];
@@ -61,7 +61,7 @@ int main(){
     cout<<"The number does not exist in the array"<<endl;
   }
 
-  //A function to modify the value of an integer when called with the index of the integer in the array and return the new value and old value back to the user
+  //modify the value of an integer when called with the index of the integer in the array and return the new value and old value back to the user
   int index, newNum, oldNum;
   cout<<"Enter the index of the number you want to modify: ";
   cin >> index;
