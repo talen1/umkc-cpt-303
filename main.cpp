@@ -1,92 +1,71 @@
-#include <iostream>
+#include "array_operations.h"
 #include <fstream>
+#include <iostream>
 
-using namespace std;
+ArrayOperations::ArrayOperations(const std::string& filename) {
+    loadDataFromFile(filename);
+}
 
-//check if a certain integer exists in the array
-bool check(int arr[], int size, int num){
-  for(int i = 0; i < size; i++){
-    if(arr[i] == num){
-      return true;
+void ArrayOperations::loadDataFromFile(const std::string& filename) {
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        throw std::runtime_error("Failed to open the file.");
     }
-  }
-  return false;
+
+    data.clear();
+
+    for (int i = 0; i < 10; ++i) {
+        std::vector<int> line;
+        for (int j = 0; j < 10; ++j) {
+            int number;
+            if (!(file >> number)) {
+                throw std::runtime_error("Error reading data from the file.");
+            }
+            line.push_back(number);
+        }
+        data.push_back(line);
+    }
+
+    file.close();
 }
 
-//modify the value of an integer when called with the index of the integer in the array and return the new value and old value back to the user
-void modify(int arr[], int index, int &num, int &old){
-  old = arr[index];
-  arr[index] = num;
+bool ArrayOperations::integerExists(int number) {
+    for (int i = 0; i < data.size(); ++i) {
+        for (int j = 0; j < data[i].size(); ++j) {
+            if (data[i][j] == number) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
-//add a new integer to the end of the array
-void add(int arr[], int &size, int num){
-  arr[size++] = num;
+std::pair<int, int> ArrayOperations::modifyValue(int index, int newValue) {
+    if (index < 0 || index >= data.size() || newValue < 0) {
+        throw std::invalid_argument("Invalid index or new value.");
+    }
+
+    int oldValue = data[index / 10][index % 10];
+    data[index / 10][index % 10] = newValue;
+    return std::make_pair(oldValue, newValue);
 }
 
-//intakes an index of an array and remove the integer corresponding to that index
-void remove(int arr[], int &size, int index){
-  for(int i = index; i < size; i++){
-    arr[i] = arr[i+1];
-  }
-  size--;
+void ArrayOperations::addInteger(int number) {
+    if (data.size() != 10 || data[0].size() != 10) {
+        throw std::runtime_error("Invalid array size.");
+    }
+
+    data[9].push_back(number);
 }
 
-int main(){
-  // File name
-  string fileName = "data.txt";
-  int arr[1000];
-  int size = 0;
+void ArrayOperations::replaceOrRemove(int index, int newValue) {
+    if (index < 0 || index >= data.size()) {
+        throw std::invalid_argument("Invalid index.");
+    }
 
-  ifstream inputFile;
-  inputFile.open(fileName.c_str());
-  if (!inputFile)
-  {
-    cout << "Unable to open file" << endl;
-    exit(1);
-  }
-  int num;
-  while (inputFile >> num)
-  {
-    arr[size++] = num;
-  }
-  inputFile.close();
-
-  //check if a certain integer exists in the array if the number is present return the index where the number is present
-  cout<<"Enter a number to check if it exists in the array: ";
-  cin >> num;
-  if(check(arr, size, num)){
-    cout<<"The number exists in the array"<<endl;
-  }else{
-    cout<<"The number does not exist in the array"<<endl;
-  }
-
-  //modify the value of an integer when called with the index of the integer in the array and return the new value and old value back to the user
-  int index, newNum, oldNum;
-  cout<<"Enter the index of the number you want to modify: ";
-  cin >> index;
-  cout<<"Enter the new number: ";
-  cin >> newNum;
-  modify(arr, index, newNum, oldNum);
-  cout<<"The old number was "<<oldNum<<" and the new number is "<<newNum<<endl;
-
-  //A function that adds a new integer to the end of the array
-  cout<<"Enter a number to add to the array: ";
-  cin >> num;
-  add(arr, size, num);
-  cout<<"The new array is: ";
-  for(int i = 0; i < size; i++){
-    cout<<arr[i]<<" ";
-  }
-  cout<<endl;
-
-  //A function which intakes an index of an array and remove the integer corresponding to that index
-  cout<<"Enter the index of the number you want to remove: ";
-  cin >> index;
-  remove(arr, size, index);
-  cout<<"The new array is: ";
-  for(int i = 0; i < size; i++){
-    cout<<arr[i]<<" ";
-  }
-  return 0;
+    if (newValue == 0) {
+        data[index / 10].erase(data[index / 10].begin() + index % 10);
+    } else {
+        data[index / 10][index % 10] = newValue;
+    }
 }
