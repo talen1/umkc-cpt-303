@@ -1,33 +1,17 @@
-# umkc-cpt-303
-This C++ program allows you to perform various operations on an array of integers loaded from a file.
+# Array Manipulation Program
+
+This program demonstrates basic array operations in C++. It reads a list of integers from a file and allows for various operations to be performed on the array, such as checking for an integer's existence, modifying an integer's value, adding a new integer, and replacing or removing an integer at a specific index.
+
+## Features
+
+- Read integers from a file into an array.
+- Check if an integer exists in the array.
+- Modify the value of an integer at a given index.
+- Add a new integer to the end of the array.
+- Replace the value at an index with 0 or remove it.
 
 ## Usage
 
-1. Compile the program by running the following command in your terminal:
+To compile the program, use the following command:
 
-
-2. Run the program:
-
-
-3. The program will load data from the "data.txt" file (ensure this file exists in the same directory) and provide a menu for performing operations on the array.
-
-## Supported Operations
-
-1. Check if a certain integer exists in the array.
-2. Modify the value of an integer in the array.
-3. Add a new integer to the end of the array.
-4. Replace or remove an integer from the array.
-
-## Example
-
-Here's an example of how to use the program:
-
-1. Check if integer 42 exists in the array.
-2. Modify the value of the integer at index 5 to 99.
-3. Add integer 123 to the end of the array.
-4. Replace the integer at index 8 with 0.
-
-## Error Handling
-
-The program uses exception handling to catch and handle errors. If an error occurs, it will be displayed in the console.
 
